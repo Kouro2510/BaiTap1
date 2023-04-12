@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Sach_tbl>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="~/js/datatable_file.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Xác nhận xóa sinh viên
+            $(".btnXoa").on("click", function () {
+                var id = $(this).attr("data-id");
+                $("#btnXoaSinhVien").attr("data-id", id); // Lưu ID của sinh viên vào nút xóa modal
+                $("#modalXoaSinhVien").modal("show"); // Hiển thị modal xác nhận xóa
+            });
+
+            // Xóa sinh viên
+            $("#btnXoaSinhVien").on("click", function () {
+                var id = $(this).attr("data-id");
+                window.location.href = "/Book/XoaSach/" + id;
+            });
+        })
+    </script>
+
+}
+
+
+<table class="table table-hover text-center" id="tbllist">
+    <button class="btn btn-primary float-end my-1 p-2" id="btnThemSinhVien" data-bs-toggle="modal" data-bs-target="#modalThemSach">Thêm Sách Mới</button>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Sách</th>
+            <th>Tác Giả</th>
+            <th>Giá Tiền</th>
+            <th>Nhà Xuất bản</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sv in Model)
+        {
+            <tr>
+                <td id="idsv">@sv.ID</td>
+                <td class="name">@sv.TenSach</td>
+                <td data-idsv="mssv">@sv.TacGia</td>
+                <td data-phone="dienthoai">@sv.GiaTien</td>
+                <td data-address="diachi">@sv.NhaXuatBan</td>
+                <td>
+                    <a asp-controller="Book" asp-action="SuaThongTinSach" asp-route-ID="@sv.ID" class="btn btn-secondary btnSua">Sửa</a>
+                    <button data-id="@sv.ID" class="btn btn-danger btnXoa" data-bs-toggle="modal" data-bs-target="#modalXoaSach">Xóa</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="modalThemSach" tabindex="-1" aria-labelledby="modalThemSachLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalThemSinhVienLabel">Thêm sách mới</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Thêm partial view vào modal -->
+                @await Html.PartialAsync("ThemSach", new Sach_tbl())
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalXoaSach" tabindex="-1" aria-labelledby="modalXoaSacgLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalXoaSinhVienLabel">Xác nhận xóa sách này</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa quyển sách này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" id="btnXoaSach">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

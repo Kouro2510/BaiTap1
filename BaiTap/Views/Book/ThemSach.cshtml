@@ -1,0 +1,36 @@
+﻿@model BaiTap.Models.Sach_tbl
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ThemSach">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenSach" class="control-label">Tên Sách</label>
+                <input asp-for="TenSach" class="form-control" />
+                <span asp-validation-for="TenSach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TacGia" class="control-label">Tác Giả</label>
+                <input asp-for="TacGia" class="form-control" />
+                <span asp-validation-for="TacGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaTien" class="control-label">Giá Tiền</label>
+                <input asp-for="GiaTien" class="form-control" />
+                <span asp-validation-for="GiaTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhaXuatBan" class="control-label">Nhà Xuất Bản</label>
+                <input asp-for="NhaXuatBan" class="form-control" />
+                <span asp-validation-for="NhaXuatBan" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,43 @@
+﻿@model BaiTap.Models.SinhVien_tbl
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SuaSinhVien" id="frmSuaSinhVien">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="editid" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="TenSinhVien" class="control-label"> Tên Sinh Viên</label>
+                <input asp-for="TenSinhVien" id="edittensinhvien" class="form-control" />
+                <span asp-validation-for="TenSinhVien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MSSV" class="control-label">Mã Số Sinh Viên</label>
+                <input asp-for="MSSV" id="editmssv" class="form-control" />
+                <span asp-validation-for="MSSV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienThoai" class="control-label">Số Điện Thoại</label>
+                <input asp-for="DienThoai" id="editdienthoai" class="form-control" />
+                <span asp-validation-for="DienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Địa Chỉ</label>
+                <input asp-for="DiaChi" id="editdiachi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <button type="submit" class="btn btn-primary">Sửa Thông Tin Sinh Viên</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("input[name=TenSinhVien]").val();
+        }
+    </script>
+}

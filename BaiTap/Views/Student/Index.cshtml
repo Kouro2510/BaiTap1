@@ -1,0 +1,99 @@
+﻿@model IEnumerable<SinhVien_tbl>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="~/js/datatable_file.js"></script>
+
+    <script type="text/javascript">
+
+        function themSinhVien() {
+            $("#frmThemSinhVien").submit();
+           
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Xác nhận xóa sinh viên
+            $(".btnXoa").on("click", function () {
+                var id = $(this).attr("data-id");
+                $("#btnXoaSinhVien").attr("data-id", id); // Lưu ID của sinh viên vào nút xóa modal
+                $("#modalXoaSinhVien").modal("show"); // Hiển thị modal xác nhận xóa
+            });
+
+            // Xóa sinh viên
+            $("#btnXoaSinhVien").on("click", function () {
+                var id = $(this).attr("data-id");
+                window.location.href = "/Student/XoaSinhVien/" + id;
+            });
+        })
+    </script>
+
+    
+}
+
+
+<table class="table table-hover text-center" id="tbllist">
+    <button class="btn btn-primary float-end my-1 p-2" id="btnThemSinhVien" data-bs-toggle="modal" data-bs-target="#modalThemSinhVien">Thêm Sinh Viên</button>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mssv</th>
+            <th>Diện Thoại</th>
+            <th>Địa Chỉ</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sv in Model)
+        {
+            <tr>
+                <td id="idsv">@sv.ID</td>
+                <td class="name">@sv.TenSinhVien</td>
+                <td data-idsv="mssv">@sv.MSSV</td>
+                <td data-phone="dienthoai">@sv.DienThoai</td>
+                <td data-address="diachi">@sv.DiaChi</td>
+                <td>
+                    <a asp-controller="Student" asp-action="SuaSinhVien" asp-route-ID="@sv.ID" class="btn btn-secondary btnSua">Sửa</a>
+                    <button data-id="@sv.ID" class="btn btn-danger btnXoa" data-bs-toggle="modal" data-bs-target="#modalXoaSinhVien">Xóa</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="modalThemSinhVien" tabindex="-1" aria-labelledby="modalThemSinhVienLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalThemSinhVienLabel">Thêm sinh viên</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Thêm partial view vào modal -->
+                @await Html.PartialAsync("ThemSinhVien", new SinhVien_tbl())
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalXoaSinhVien" tabindex="-1" aria-labelledby="modalXoaSinhVienLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalXoaSinhVienLabel">Xác nhận xóa sinh viên</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa sinh viên này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" id="btnXoaSinhVien">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

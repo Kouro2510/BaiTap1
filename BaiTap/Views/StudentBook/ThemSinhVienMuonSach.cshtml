@@ -1,0 +1,34 @@
+﻿@model BaiTap.Models.SinhVienSach_tbl
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ThemSinhVienMuonSach">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IDSach" class="control-label">Tên Sách</label>
+                <select asp-for="IDSach" class="form-control" asp-items="ViewBag.SachList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IDSinhVien" class="control-label">Tên Sinh Viên</label>
+                <select asp-for="IDSinhVien" class="form-control" asp-items="ViewBag.SinhVienList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayMuonSach" class="control-label">Ngày Mượn Sách</label>
+                <input asp-for="NgayMuonSach" class="form-control" />
+                <span asp-validation-for="NgayMuonSach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayTra" class="control-label">Ngày Trả Sách</label>
+                <input asp-for="NgayTra" class="form-control" />
+                <span asp-validation-for="NgayTra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm Mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
